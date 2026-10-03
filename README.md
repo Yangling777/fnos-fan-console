@@ -1,6 +1,6 @@
-# 风扇控制器 · fnos-fan-control(v1.0 增强版)
+# 飞牛风扇控制器 · fnos-fan-control(v1.0 增强版)
 
-> 飞牛 fnOS 风扇控制器的二次开发版本,基于 [AriesOxO/fnos-fan-control](https://github.com/AriesOxO/fnos-fan-control)(MIT License)改造。
+> **飞牛风扇控制器** —— 基于 [AriesOxO/fnos-fan-control](https://github.com/AriesOxO/fnos-fan-control)(MIT License)二次开发。
 > 以前端改造为主,并含少量后端增强(GPU 温度来源、失败保护按来源生效、告警 Webhook 等);核心风扇控制逻辑沿用上游实现。
 
 ![首页](screenshots/01-home.png)
