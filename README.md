@@ -3,6 +3,7 @@
 > **飞牛风扇控制器** —— **颜值与功能都在线**:液态玻璃(Liquid Glass)+ 拯救者(Legion)风格的飞牛 NAS 风扇控制台。
 > 基于 [AriesOxO/fnos-fan-control](https://github.com/AriesOxO/fnos-fan-control)(MIT License)二次开发。
 > 以前端改造为主,并含少量后端增强(GPU 温度来源、失败保护按来源生效、告警 Webhook 等);核心风扇控制逻辑沿用上游实现。
+> 📝 博客介绍:[《给飞牛 NAS 写了个风扇控制器 v1.0》](https://linxiang.cloud/archives/fnos-fan-controller-v1)
 
 ![首页](screenshots/01-home.png)
 
@@ -49,6 +50,7 @@
 3. 安装向导中设置管理端口(默认 9511)与访问密码(留空 = 不启用认证)。
 
 > 说明:本包已在飞牛 fnOS 真机完成安装验证;实测 `appcenter-cli install-fpk` 在应用已安装时不会执行升级,后续版本升级请在应用中心界面操作,或卸载后重装(卸载前请备份 `/vol1/@appconf/fan-control/`)。
+> 国内镜像(Gitee):[linxiang011/fnos-fan-control](https://gitee.com/linxiang011/fnos-fan-control)(源码 + 发行版附件,国内访问更快)。
 
 ## 🔧 从源码构建
 
