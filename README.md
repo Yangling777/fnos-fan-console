@@ -31,17 +31,16 @@
 
 ## 📥 安装
 
-1. 在 [Releases](../../releases) 页面下载 `fan-control_1.1.2.fpk`
-   (产品版本 **v1.0**;fpk 版本号 `1.1.2` 承接上游 1.1.x 版本线,便于在应用中心覆盖升级);
+1. 在 [Releases](../../releases) 页面下载 `fan-control_1.0.0.fpk`(产品版本 **v1.0**,fpk 版本号与产品一致);
 2. 飞牛 fnOS 应用中心 → 手动安装 → 上传该 fpk;或 SSH 执行:
 
    ```bash
-   appcenter-cli install-fpk fan-control_1.1.2.fpk
+   appcenter-cli install-fpk fan-control_1.0.0.fpk
    ```
 
 3. 安装向导中设置管理端口(默认 9511)与访问密码(留空 = 不启用认证)。
 
-> 说明:实测 `appcenter-cli install-fpk` 在应用已安装时不会执行升级;已装旧版本的设备请在应用中心界面升级,或卸载后重装(卸载前请备份 `/vol1/@appconf/fan-control/`)。
+> 说明:本包已在飞牛 fnOS 真机完成安装验证;实测 `appcenter-cli install-fpk` 在应用已安装时不会执行升级,后续版本升级请在应用中心界面操作,或卸载后重装(卸载前请备份 `/vol1/@appconf/fan-control/`)。
 
 ## 🔧 从源码构建
 

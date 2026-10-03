@@ -1,5 +1,5 @@
 appname               = fan-control
-version               = 1.1.2
+version               = 1.0.0
 desc                  = 飞牛NAS 风扇控制器（v1.0 增强版）：自定义温控曲线、多模式、多区域独立管理、GPU 温度来源、告警通知（浏览器/Webhook）、日志与配置备份、PWA 手机界面。
 platform              = x86
 maintainer            = AriesOxO
