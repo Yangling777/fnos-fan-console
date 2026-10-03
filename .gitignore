@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+pipeline/index.html
+*.fpk
+fnpack
+fnpack.exe
+.vscode/
+.idea/

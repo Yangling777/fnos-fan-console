@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    name: 组装 + 单测 + JS 语法
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: 组装前端(替换断言校验)
+        run: python "pipeline/构建脚本/fc-assemble-legion.py"
+
+      - name: 单元测试(68 例)
+        run: python -m unittest discover -s tests -v
+
+      - name: 抽取内联脚本
+        run: |
+          python - <<'PY'
+          import io, re
+          html = io.open("pipeline/index.html", encoding="utf-8").read()
+          blocks = re.findall(r"<script>(.*?)</script>", html, re.S)
+          io.open("/tmp/fc-check.js", "w", encoding="utf-8").write("\n;\n".join(blocks))
+          print("script blocks:", len(blocks))
+          PY
+
+      - name: JS 语法检查(node --check)
+        run: node --check /tmp/fc-check.js
+
+  build-fpk:
+    name: 构建 fpk
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 下载 fnpack(官方)
+        run: |
+          curl -fsSL -o fnpack https://static2.fnnas.com/fnpack/fnpack-1.2.3-linux-amd64
+          chmod +x fnpack
+
+      - name: 组装并同步到 fpk 工程
+        run: |
+          python "pipeline/构建脚本/fc-assemble-legion.py"
+          cp pipeline/index.html src/app/bin/static/index.html
+          find src -name __pycache__ -type d -exec rm -rf {} +
+
+      - name: 构建 fpk
+        run: ./fnpack build -d src
+
+      - name: 上传构建产物
+        uses: actions/upload-artifact@v4
+        with:
+          name: fan-control-fpk
+          path: "*.fpk"

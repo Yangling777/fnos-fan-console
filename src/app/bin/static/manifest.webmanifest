@@ -1,0 +1,15 @@
+{
+  "name": "风扇控制器",
+  "short_name": "风扇控制",
+  "description": "飞牛 NAS 风扇控制器 Web 界面(温度监控 · 风扇调速)",
+  "lang": "zh-CN",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0b1220",
+  "theme_color": "#0b1220",
+  "icons": [
+    { "src": "/icon-128.png", "sizes": "128x128", "type": "image/png" },
+    { "src": "/icon-256.png", "sizes": "256x256", "type": "image/png" }
+  ]
+}

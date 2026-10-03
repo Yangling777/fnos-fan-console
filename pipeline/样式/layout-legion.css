@@ -1,0 +1,401 @@
+/* ══════════════════════════════════════════════════════════════════
+   v6 · 拯救者(Legion)布局补丁
+   —— 只重排版式:左侧栏 + 顶栏 + 仪表盘英雄卡 + 快捷卡片区
+   —— 液态玻璃基底样式(上一段)全部保留
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── 总布局 ── */
+body{overflow:hidden}
+.app{display:flex;height:100vh;min-width:1024px}
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.content{flex:1;overflow-y:auto;padding:18px 20px 30px;display:flex;flex-direction:column;min-height:0}
+.content::-webkit-scrollbar{width:9px}
+.content::-webkit-scrollbar-thumb{background:#2a3040;border-radius:5px}
+.content::-webkit-scrollbar-thumb:hover{background:#38415a}
+.container{max-width:none;margin:0;padding:0}
+
+/* ── 顶栏(玻璃) ── */
+.topbar{flex:none;z-index:40}
+.tb-title{font-size:15px;font-weight:700;letter-spacing:-.2px;display:flex;align-items:center;gap:10px}
+.tb-title .tb-sub{font-size:11px;color:var(--text3);font-weight:500;letter-spacing:.04em}
+.tb-right{display:flex;align-items:center;gap:10px;margin-left:auto}
+.tb-right .wp-panel{top:calc(100% + 8px);right:16px}
+
+/* ── 左侧栏(玻璃) ── */
+.sidebar{
+  width:216px;flex:none;display:flex;flex-direction:column;overflow:hidden;position:relative;z-index:20;
+  background:linear-gradient(180deg,rgba(18,27,46,.58),rgba(10,16,30,.66));
+  border-right:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
+  transition:width .25s ease;
+}
+.brand{display:flex;align-items:center;gap:11px;padding:19px 16px 16px;border-bottom:1px solid rgba(255,255,255,.07)}
+.brand .b-icon{width:32px;height:32px;flex:none;color:#eaf4ff;display:grid;place-items:center;filter:drop-shadow(0 4px 10px rgba(34,193,224,.35))}
+.brand .b-icon svg{width:30px;height:30px;animation:fan-spin 14s linear infinite}
+.brand .b-name{font-size:14px;font-weight:800;letter-spacing:.12em}
+.brand .b-sub{font-size:10px;color:var(--text3);letter-spacing:.08em;margin-top:1px}
+.side-nav{flex:1;padding:12px 10px;display:flex;flex-direction:column;gap:2px;overflow-y:auto}
+.side-item{
+  display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:10px;border:0;background:transparent;
+  color:var(--text2);font-size:13px;cursor:pointer;width:100%;text-align:left;white-space:nowrap;
+  transition:background .15s ease,color .15s ease;
+}
+.side-item svg{width:17px;height:17px;flex:none}
+.side-item span{display:inline}
+.side-item:hover{background:rgba(255,255,255,.05);color:var(--text)}
+.side-item.active{background:rgba(255,255,255,.08);color:var(--text);box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+.side-item .s-badge{margin-left:auto;font-size:10px;color:var(--text3)}
+.side-foot{padding:12px;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:10px}
+.collapse-btn{
+  width:34px;height:34px;flex:none;border-radius:9px;border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);color:var(--text2);cursor:pointer;display:grid;place-items:center;
+}
+.collapse-btn:hover{background:rgba(255,255,255,.09);color:var(--text)}
+.collapse-btn svg{width:15px;height:15px;transition:transform .25s ease}
+.side-foot .sys{font-size:10.5px;color:var(--text3);white-space:nowrap}
+.app.collapsed .sidebar{width:64px}
+.app.collapsed .b-text,.app.collapsed .side-item span,.app.collapsed .side-item .s-badge,.app.collapsed .side-foot .sys{display:none}
+.app.collapsed .side-item{justify-content:center;padding:10px}
+.app.collapsed .brand{justify-content:center;padding:19px 8px 16px}
+.app.collapsed .collapse-btn svg{transform:rotate(180deg)}
+
+/* ── 英雄卡 / 仪表盘 ── */
+.top-grid{display:grid;grid-template-columns:minmax(0,2.02fr) minmax(0,1fr);gap:14px;align-items:stretch;margin-bottom:14px}
+.mini-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:14px;min-height:0}
+.bottom-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:16px}
+.view{min-height:0}
+
+.hero{padding:20px 24px 10px;text-align:left;overflow:visible;display:flex;flex-direction:column}
+.hero:hover{transform:none;box-shadow:var(--shadow),inset 0 1px 0 rgba(255,255,255,.14),inset 0 -1px 0 rgba(255,255,255,.04)}
+.hero-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:2px;gap:10px}
+.hero-title{font-size:18px;font-weight:700;letter-spacing:-.2px;display:flex;align-items:center;gap:8px}
+.hw-chip{font-size:11.5px;color:var(--text2);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);padding:4px 12px;border-radius:999px;white-space:nowrap}
+.hero-body{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:4px;padding:10px 0 2px;flex:1}
+
+.gauge-col{display:flex;flex-direction:column;align-items:center;gap:12px;min-width:0}
+.gauge{position:relative;width:min(292px,100%)}
+.gauge svg{display:block;width:100%}
+.g-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-top:4px;pointer-events:none}
+.g-label{display:flex;align-items:center;gap:6px;color:var(--text2);font-size:12.5px;margin-bottom:2px}
+.g-label svg{width:14px;height:14px}
+.g-num{display:flex;align-items:baseline;gap:3px}
+.g-track{fill:none;stroke:rgba(255,255,255,.09);stroke-width:9;stroke-linecap:round}
+.g-value{fill:none;stroke:#e9f2fa;stroke-width:9;stroke-linecap:round;transition:stroke-dasharray .9s cubic-bezier(.2,.7,.2,1);filter:drop-shadow(0 0 6px rgba(190,230,255,.35))}
+.gauge--mini{width:152px}
+.gauge--mini .g-track,.gauge--mini .g-value{stroke-width:7}
+.hero .gauge .card-value{font-size:40px;font-weight:800;letter-spacing:-1px;line-height:1}
+.hero .gauge .card-unit{font-size:14px;font-weight:600;color:var(--text2)}
+.hero .gauge--mini .card-value{font-size:23px;letter-spacing:-.5px}
+.hero .gauge--mini .card-unit{font-size:11px}
+
+/* 仪表卡壳(#cardCpu 等会被 JS 覆写为 card c-cpu 等类,用 ID 重置回透明容器) */
+#cardCpu,#cardDisk,#cardFan{
+  background:none;border:0;box-shadow:none;border-radius:0;padding:0;margin:0;
+  backdrop-filter:none;-webkit-backdrop-filter:none;text-align:center;overflow:visible;transition:none;position:static;
+}
+#cardCpu::after,#cardDisk::after,#cardFan::after{display:none}
+#cardCpu:hover,#cardDisk:hover,#cardFan:hover{transform:none;box-shadow:none}
+.hero .gauge-stats{display:flex;gap:20px;flex-wrap:wrap;justify-content:center}
+.hero .stat{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--text2)}
+.hero .stat svg{width:14px;height:14px;color:var(--text3)}
+.hero .stat .card-value{font-size:13.5px;font-weight:700;letter-spacing:0;color:var(--text);border-bottom:1px solid rgba(255,255,255,.18);padding-bottom:1px}
+.hero .stat .card-unit{font-size:11px;color:var(--text2)}
+.hero-disk-detail{max-width:300px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hero .progress-bar{width:150px;margin:8px auto 0}
+
+/* 中央:五边形散热模式 */
+.center-col{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 16px}
+.tag-heat{font-size:11px;color:var(--text3);letter-spacing:.22em;display:flex;align-items:center;gap:8px}
+.tag-heat::before,.tag-heat::after{content:'';width:18px;height:1px;background:rgba(255,255,255,.16)}
+.tag-side{position:absolute;top:64px;font-size:10.5px;color:var(--text3);letter-spacing:.08em}
+.tag-side::after{content:'';position:absolute;top:50%;width:32px;height:1px;background:rgba(255,255,255,.12)}
+.tag-cpu{left:-26px}
+.tag-cpu::after{left:100%}
+.tag-gpu{right:-26px}
+.tag-gpu::after{right:100%}
+.pentagon{position:relative}
+.pentagon svg{display:block;width:162px;height:162px}
+.pentagon .p-mode{position:absolute;left:0;right:0;top:96px;text-align:center;font-size:9.5px;letter-spacing:.18em;color:var(--text2);font-weight:600}
+.pentagon .p-icon{position:absolute;left:50%;top:50px;transform:translate(-50%,-50%);color:#eaf4ff;filter:drop-shadow(0 0 8px rgba(150,210,255,.35))}
+.pentagon .p-icon svg{width:30px;height:30px}
+
+/* ── 迷你卡 / 底部卡(玻璃) ── */
+.mini-card,.sm-card{text-align:left;padding:18px;display:flex;flex-direction:column;overflow:visible}
+.mini-card .m-icon,.sm-card .m-icon{width:30px;height:30px;color:#b9ccd9;margin-bottom:12px;flex:none}
+.mini-card .m-icon svg,.sm-card .m-icon svg{width:100%;height:100%}
+.mini-card h3{margin:0 0 6px;font-size:15.5px;font-weight:700}
+.sm-card h3{margin:0 0 5px;font-size:14.5px;font-weight:700}
+.mini-card p,.sm-card p{margin:0;font-size:12px;color:var(--text2);line-height:1.55}
+.m-foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:14px}
+.m-state{font-size:12.5px;color:var(--text2)}
+.dot-ok{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--text)}
+.dot-ok i{width:7px;height:7px;border-radius:50%;background:#e8eaed;box-shadow:0 0 8px rgba(255,255,255,.55)}
+.mini-card .big{font-size:18px;font-weight:800;line-height:1.3}
+.mini-card .sub{font-size:11.5px;color:var(--text2);margin-top:3px;line-height:1.5}
+.promo{background:linear-gradient(160deg,rgba(38,49,72,.75) 0%,rgba(20,28,44,.7) 55%,rgba(13,19,32,.72) 100%)}
+.promo--red{background:linear-gradient(160deg,rgba(74,32,40,.72) 0%,rgba(38,18,24,.68) 60%,rgba(24,12,16,.72) 100%);border-color:rgba(255,89,100,.22)}
+.promo--blue{background:linear-gradient(160deg,rgba(30,48,76,.72) 0%,rgba(17,26,44,.68) 60%,rgba(11,17,30,.72) 100%);border-color:rgba(120,183,255,.2)}
+.promo .glyph{position:absolute;right:10px;bottom:0;font-size:58px;line-height:1;color:rgba(255,255,255,.05);font-weight:900;letter-spacing:-4px;pointer-events:none}
+.link{display:inline-block;margin-top:10px;color:var(--accent);font-size:12.5px;cursor:pointer;font-weight:600}
+.link:hover{text-decoration:underline}
+.foot-row{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;color:var(--text2);width:100%}
+.foot-row .v{color:var(--text);font-weight:700;font-variant-numeric:tabular-nums}
+
+/* 底部卡控件(分段/开关/滑杆) */
+.sm-card .seg,.mini-card .seg{display:flex;background:rgba(8,14,26,.55);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:3px;gap:3px}
+.sm-card .seg button{flex:1;border:0;background:transparent;color:var(--text2);font-size:12px;padding:6px 4px;border-radius:7px;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s}
+.sm-card .seg button:hover{color:var(--text)}
+.sm-card .seg button.active{background:rgba(34,193,224,.2);color:#fff;font-weight:600}
+.switch{position:relative;display:inline-block;width:40px;height:22px;flex:none;cursor:pointer}
+.switch input{display:none}
+.switch i{position:absolute;inset:0;background:rgba(255,255,255,.14);border-radius:11px;transition:background .2s}
+.switch i::after{content:'';position:absolute;width:16px;height:16px;border-radius:50%;background:#9db0c8;top:3px;left:3px;transition:all .2s}
+.switch input:checked + i{background:rgba(34,193,224,.75)}
+.switch input:checked + i::after{left:21px;background:#fff}
+.mini-card input[type=range],.sm-card input[type=range]{
+  -webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:2px;outline:none;
+  background:linear-gradient(90deg,var(--accent) var(--fill,20%),rgba(255,255,255,.12) var(--fill,20%));
+}
+.mini-card input[type=range]::-webkit-slider-thumb,.sm-card input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:#fff;cursor:pointer;
+  box-shadow:0 0 0 1px rgba(255,255,255,.25),0 2px 8px rgba(2,8,20,.5);
+}
+
+/* ── 运行模式:改为拯救者式页签(只作用于单区域模式区) ── */
+#singleModeSection{
+  background:none;border:0;box-shadow:none;padding:0;margin:0;border-radius:0;
+  backdrop-filter:none;-webkit-backdrop-filter:none;display:block;
+}
+#singleModeSection::after{display:none}
+#singleModeSection>.section-title{display:none}
+#singleModeSection .mode-btns{
+  display:flex;justify-content:center;align-items:center;gap:4px;max-width:none;margin:0;
+  border-top:1px solid rgba(255,255,255,.08);padding:9px 0 3px;
+}
+#singleModeSection .mode-btn{
+  display:inline-flex;flex-direction:row;align-items:center;gap:8px;
+  padding:8px 20px;border-radius:9px;border:1px solid transparent;background:transparent;
+  color:var(--text2);font-size:13.5px;cursor:pointer;position:static;overflow:visible;
+  transition:background .15s ease,color .15s ease,border-color .15s ease;
+}
+#singleModeSection .mode-btn::after{display:none}
+#singleModeSection .mode-btn:hover:not(:disabled){background:rgba(255,255,255,.06);transform:none;box-shadow:none;border-color:transparent}
+#singleModeSection .mode-btn.active{
+  background:rgba(34,193,224,.16);border-color:rgba(34,193,224,.45);color:#fff;font-weight:700;
+  box-shadow:0 0 20px rgba(34,193,224,.16);transform:none;
+}
+#singleModeSection .mode-btn .m-icon{width:16px;height:16px;background:none;box-shadow:none;margin:0;display:grid;place-items:center;border-radius:0}
+#singleModeSection .mode-btn .m-icon svg{width:15px;height:15px;opacity:.85}
+#singleModeSection .mode-btn.active .m-icon svg{opacity:1}
+#singleModeSection .mode-btn:hover:not(:disabled) .m-icon{transform:none}
+#singleModeSection .mode-btn.active .m-icon{box-shadow:none}
+#singleModeSection .mode-btn .name{font-size:13.5px}
+#singleModeSection .mode-btn.active .name{color:#fff}
+#singleModeSection .mode-btn .desc{display:none}
+#singleModeSection .mode-btn:disabled{opacity:.35}
+#singleModeSection .mode-detail{margin-top:12px}
+
+/* ── 响应式 ── */
+@media (max-width:1500px){.bottom-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:1320px){
+  .bottom-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .top-grid{grid-template-columns:minmax(0,1.7fr) minmax(0,1fr)}
+}
+@media (max-width:1120px){
+  .top-grid{grid-template-columns:1fr}
+  .mini-grid{grid-template-rows:auto}
+}
+@media (max-width:880px){
+  .sidebar{display:none}
+  .hero-body{grid-template-columns:1fr;justify-items:center;gap:14px}
+  .tag-side{display:none}
+}
+
+/* ════════ v8 追加 ════════ */
+
+/* ① 视图铺满:首页自适应填满屏幕 */
+.content{padding-bottom:24px}
+.view{display:flex;flex-direction:column;flex:1 0 auto;min-height:0}
+#viewHome .top-grid{flex:1;min-height:380px}
+#viewHome .bottom-grid{margin-bottom:0}
+
+/* 仪表盘随屏幕尺寸缩放 */
+.gauge{width:clamp(230px, min(17vw, 30vh), 380px)}
+.gauge--mini{width:clamp(120px, 8.5vw, 170px)}
+.hero .gauge .card-value{font-size:clamp(30px, 2.3vw, 46px)}
+.hero .gauge--mini .card-value{font-size:clamp(20px, 1.45vw, 27px)}
+.hero .gauge .card-unit{font-size:clamp(12px, 1vw, 16px)}
+
+/* ② 壁纸入口(高级设置内)+ 状态徽章(仪表盘标题后) */
+.wp-anchor{position:relative;display:inline-block}
+.wp-anchor .wp-panel{left:0;right:auto;top:calc(100% + 8px)}
+.hero-title .status-badge{margin-left:4px}
+/* 修复:设置页折叠容器会裁剪壁纸悬浮面板 → 展开时解除 overflow 裁剪 */
+#settingsBody.open{overflow:visible}
+
+/* ③ 温控曲线:大尺寸自适应 + 拖拽节点 */.curve-svg{height:clamp(300px,44vh,480px)}
+.curve-line{stroke-width:var(--curve-lw,2.5px)}
+.curve-dot{r:var(--curve-r,5px);cursor:grab}
+.curve-hit{fill:transparent;stroke:none;cursor:grab}
+.curve-svg.dragging{cursor:grabbing}
+.curve-svg.dragging .curve-dot{r:calc(var(--curve-r,5px) + 2px)}
+
+/* ④ 关于页 */
+.guide a{color:var(--accent);text-decoration:none}
+.guide a:hover{text-decoration:underline}
+
+/* ════════ v9.2 追加 ════════ */
+
+/* ① 温控曲线:未保存提醒 */
+.curve-dirty-note{
+  display:none;align-items:center;gap:6px;margin-left:auto;margin-right:10px;
+  font-size:12px;color:var(--warn);font-weight:600;white-space:nowrap;
+}
+.curve-dirty-note.on{display:inline-flex}
+.curve-dirty-note::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--warn);box-shadow:0 0 8px rgba(245,176,62,.75)}
+#curveSaveBtn.is-dirty{animation:dirty-glow 1.6s ease-in-out infinite}
+@keyframes dirty-glow{
+  0%,100%{box-shadow:0 6px 18px rgba(34,193,224,.25),inset 0 1px 0 rgba(255,255,255,.35)}
+  50%{box-shadow:0 8px 24px rgba(245,176,62,.4),0 0 0 3px rgba(245,176,62,.15),inset 0 1px 0 rgba(255,255,255,.35)}
+}
+.side-item .s-dot{display:none;width:6px;height:6px;border-radius:50%;background:var(--warn);box-shadow:0 0 8px rgba(245,176,62,.7);flex:none;margin-left:2px}
+.side-item .s-dot.on{display:block}
+.app.collapsed .side-item .s-dot{display:none}
+.side-foot .sys{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.curve-svg{touch-action:none}
+
+/* ② 手机端适配(≤880px):侧栏收为底部导航,内容单列滚动 */
+@media (max-width:880px){
+  .app{min-width:0;flex-direction:column;height:100vh;height:100dvh}
+  .app.collapsed .sidebar{width:100%}
+  .sidebar{
+    position:fixed;left:0;right:0;bottom:0;top:auto;z-index:60;width:100%;height:auto;
+    display:flex;flex-direction:row;border-right:0;border-top:1px solid rgba(255,255,255,.09);
+    background:linear-gradient(0deg,rgba(9,15,28,.96),rgba(17,26,44,.9));
+    backdrop-filter:none;-webkit-backdrop-filter:none;
+    padding-bottom:env(safe-area-inset-bottom,0);
+  }
+  .brand,.side-foot{display:none}
+  .side-nav{flex-direction:row;flex:1;padding:5px 6px;gap:2px;overflow:visible;justify-content:space-around}
+  .side-nav .side-item{flex:1 1 0;min-width:0;flex-direction:column;gap:3px;justify-content:center;text-align:center;padding:7px 1px 5px;font-size:10px;border-radius:12px;position:relative}
+  .side-item svg{width:18px;height:18px}
+  .app.collapsed .side-item{justify-content:center;padding:7px 1px 5px}
+  .app.collapsed .side-item > span:not(.s-badge){display:inline}
+  .side-item .s-badge{display:none}
+  .app.collapsed .side-item .s-dot.on{display:block}
+  .side-item .s-dot.on{position:absolute;top:6px;right:calc(50% - 17px);margin:0}
+  .main{width:100%;min-height:0}
+  .content{padding:12px 12px calc(78px + env(safe-area-inset-bottom,0px))}
+  .section{padding:14px;margin-bottom:12px}
+  .hero{padding:16px 14px 8px}
+  .hero-head{flex-wrap:wrap;row-gap:6px}
+  .hero-title{font-size:16px;flex-wrap:wrap;row-gap:4px}
+  #viewHome .top-grid{min-height:0}
+  .gauge{width:min(262px,74vw)}
+  .gauge--mini{width:min(150px,50vw)}
+  .hero .progress-bar{width:min(220px,62vw)}
+  .hero-disk-detail{max-width:86vw}
+  .mini-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+  .bottom-grid{grid-template-columns:1fr}
+  #singleModeSection .mode-btns{flex-wrap:wrap}
+  #singleModeSection .mode-btn{padding:8px 14px}
+  .btn-group{flex-wrap:wrap}
+  .log-item{flex-wrap:wrap;row-gap:2px}
+  .log-time{min-width:0}
+  .log-list{max-height:none}
+  .login-box{width:min(330px,calc(100vw - 32px))}
+  .toast{max-width:calc(100vw - 32px);white-space:normal;text-align:center}
+}
+@media (max-width:600px){
+  .mini-grid{grid-template-columns:1fr}
+  .setting-row{flex-wrap:wrap;row-gap:6px}
+  .setting-row label{min-width:auto}
+  .curve-header{flex-wrap:wrap;row-gap:8px}
+  .curve-dirty-note{margin-left:0}
+  .wp-anchor .wp-panel{left:0;max-width:calc(100vw - 136px)}
+}
+
+/* ══════════════════════════════════════════════════════════════
+   v1.0 批次二(§2.3 日志增强 / §2.6 温度趋势 / §2.8 配置备份)
+   ══════════════════════════════════════════════════════════════ */
+
+/* —— 日志头部工具区(级别筛选 / 导出 / 清空) —— */
+.log-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.log-filter{display:flex;border:1px solid rgba(255,255,255,.12);border-radius:999px;overflow:hidden;background:rgba(8,14,26,.42)}
+.log-filter button{border:0;background:transparent;color:var(--text2);font-size:12px;padding:5px 11px;cursor:pointer;transition:background .15s ease,color .15s ease}
+.log-filter button:hover{color:var(--text)}
+.log-filter button.active{background:rgba(34,193,224,.18);color:var(--accent);font-weight:600}
+.log-item[data-level="warn"]{border-left:2px solid rgba(245,158,11,.55)}
+.log-item[data-level="error"]{border-left:2px solid rgba(239,68,68,.6)}
+
+/* —— 温度趋势 sparkline(零动画,纯 SVG 折线) —— */
+.spark-wrap{margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.07)}
+.spark-head{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.spark-title{font-size:12px;color:var(--text2);letter-spacing:.02em}
+.spark-legend{display:flex;gap:10px;flex-wrap:wrap;font-size:11.5px;color:var(--text2)}
+.spark-item{display:inline-flex;align-items:center;gap:5px}
+.spark-item i{width:7px;height:7px;border-radius:50%;display:inline-block}
+.spark-svg{width:100%;height:auto;display:block}
+.spark-line{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.spark-txt{fill:var(--text3);font-size:11px;font-family:"SF Mono",Consolas,monospace}
+
+/* —— 配置备份按钮组 —— */
+.cfg-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+@media (max-width:880px){
+  .log-header{flex-wrap:wrap;row-gap:8px}
+  .log-actions{width:100%;justify-content:flex-start}
+}
+
+/* ══════════════════════════════════════════════════════════════
+   v1.0 批次三(§2.4 告警通知 / §2.5 区域管理 / §2.7 PWA)
+   ══════════════════════════════════════════════════════════════ */
+
+/* —— 告警通知 / Webhook 设置行 —— */
+.notify-inline{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.notify-inline .hint{font-size:11.5px;color:var(--text3)}
+.webhook-inline{display:flex;gap:8px;flex-wrap:wrap;flex:1;min-width:240px}
+.webhook-inline input{flex:1;min-width:200px;padding:7px 10px;background:rgba(8,14,26,.6);border:1px solid rgba(255,255,255,.14);border-radius:9px;color:var(--text);font-size:12.5px}
+.webhook-inline input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(34,193,224,.15)}
+
+/* —— 区域管理 —— */
+.zones-intro{font-size:12.5px;color:var(--text2);margin-bottom:12px;line-height:1.7}
+.zones-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:10px}
+.zones-empty{font-size:12.5px;color:var(--text3);padding:14px;border:1px dashed rgba(255,255,255,.12);border-radius:12px}
+.zone-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;border:1px solid rgba(255,255,255,.09);border-radius:14px;background:rgba(8,14,26,.35)}
+.zone-row-name{font-size:13.5px;font-weight:600}
+.zone-row-meta{font-size:11.5px;color:var(--text2);margin-top:3px;line-height:1.6}
+.zone-row-btns{display:flex;gap:6px;flex:none}
+.zones-actions{display:flex;gap:8px;margin-top:12px}
+.zone-editor{margin-top:14px;padding:14px;border:1px solid rgba(255,255,255,.12);border-radius:16px;background:rgba(8,14,26,.45)}
+.zone-editor-title{font-size:13.5px;font-weight:700;margin-bottom:12px;color:var(--accent)}
+.zone-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.zone-field{display:flex;flex-direction:column;gap:6px}
+.zone-field--wide{grid-column:1 / -1}
+.zone-field label{font-size:12px;color:var(--text2)}
+.zone-field input[type=text],.zone-field input[type=number],.zone-field select{padding:7px 10px;background:rgba(8,14,26,.6);border:1px solid rgba(255,255,255,.14);border-radius:9px;color:var(--text);font-size:12.5px}
+.zone-field select{cursor:pointer}
+.zf-channels{display:flex;gap:10px;flex-wrap:wrap;padding:6px 2px}
+.zf-ch{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;cursor:pointer}
+.zf-ch input{accent-color:var(--accent)}
+.zf-curve{display:flex;flex-direction:column;gap:6px}
+.zf-node{display:flex;align-items:center;gap:6px;font-size:12px}
+.zf-node input{width:64px;padding:5px 6px;background:rgba(8,14,26,.6);border:1px solid rgba(255,255,255,.14);border-radius:8px;color:var(--text);text-align:center;font-size:12px}
+.zf-node-label{width:52px;color:var(--text2)}
+.zf-unit{color:var(--text3)}
+.zf-arrow{color:var(--accent)}
+.zf-curve-actions{display:flex;gap:8px;margin-top:4px}
+.zone-editor-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}
+
+/* —— 多区域状态面板(启用 multiZone 展示路径) —— */
+#zonesContainer{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px;margin-top:12px}
+#zonesContainer .zone-panel{margin-bottom:0}
+
+@media (max-width:880px){
+  .zones-list{grid-template-columns:1fr}
+  .zone-form{grid-template-columns:1fr}
+  .zone-row{flex-direction:column;align-items:stretch}
+  .zone-row-btns{justify-content:flex-end}
+  .webhook-inline input{min-width:0}
+  #zonesContainer{grid-template-columns:1fr}
+}

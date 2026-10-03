@@ -1,0 +1,16 @@
+#!/bin/bash
+# 卸载前执行：恢复硬件安全状态 + 清理 nginx 反代
+
+# 恢复所有 PWM 通道为安全状态（通用，不匹配芯片型号）
+for pwm_enable in /sys/class/hwmon/hwmon*/pwm*_enable; do
+    [ -w "$pwm_enable" ] && echo 2 > "$pwm_enable" 2>/dev/null
+done
+
+# 清理 nginx 反代配置
+NGINX_CONF="/usr/trim/nginx/conf/conf.d/fan_control.conf"
+if [ -f "$NGINX_CONF" ]; then
+    rm -f "$NGINX_CONF"
+    /usr/trim/nginx/sbin/nginx -s reload 2>/dev/null || true
+fi
+
+exit 0
