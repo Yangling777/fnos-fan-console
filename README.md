@@ -105,6 +105,12 @@ tests/               # 单元测试(68 例)
 screenshots/         # 界面截图(Mock 数据)
 ```
 
+## 🔗 相关链接
+
+- 📝 博客介绍:[《给飞牛 NAS 写了个风扇控制器 v1.0:液态玻璃界面 + 多区域管理 + 一键安装包》](https://linxiang.cloud/archives/fnos-fan-controller-v1)
+- 🇨🇳 国内镜像(Gitee):[gitee.com/linxiang011/fnos-fan-control](https://gitee.com/linxiang011/fnos-fan-control)(源码 + 发行版 fpk,访问更快)
+- 🧩 上游项目:[AriesOxO/fnos-fan-control](https://github.com/AriesOxO/fnos-fan-control)(MIT License)
+
 ## 🙏 致谢与许可
 
 - 上游项目:[AriesOxO/fnos-fan-control](https://github.com/AriesOxO/fnos-fan-control)(MIT License);
