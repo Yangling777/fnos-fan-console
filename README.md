@@ -17,6 +17,18 @@
 - **手机端**:窄屏布局适配、底部导航,支持 PWA“添加到主屏”;
 - **质量保障**:68 例单元测试 + CI(组装断言 / 单测 / `node --check` / fpk 构建)。
 
+## 🖼 界面预览(1920×1080 全屏截图)
+
+| | |
+| --- | --- |
+| ![首页](screenshots/01-home.png) | ![多区域首页](screenshots/02-home-multizone.png) |
+| ![温控曲线](screenshots/03-curve.png) | ![区域管理](screenshots/04-zones.png) |
+| ![区域编辑](screenshots/05-zone-editor.png) | ![运行日志](screenshots/06-logs.png) |
+| ![高级设置](screenshots/07-settings.png) | ![壁纸面板](screenshots/08-wallpaper.png) |
+| ![使用说明](screenshots/09-guide.png) | ![关于](screenshots/10-about.png) |
+| ![登录页](screenshots/11-login.png) | ![手机端首页](screenshots/12-mobile-home.png) |
+| ![手机端区域管理](screenshots/13-mobile-zones.png) | ![曜石壁纸](screenshots/14-wallpaper-obsidian.png) |
+
 ## 📥 安装
 
 1. 在 [Releases](../../releases) 页面下载 `fan-control_1.1.2.fpk`
