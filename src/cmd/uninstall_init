@@ -7,7 +7,7 @@ for pwm_enable in /sys/class/hwmon/hwmon*/pwm*_enable; do
 done
 
 # 清理 nginx 反代配置
-NGINX_CONF="/usr/trim/nginx/conf/conf.d/fan_control.conf"
+NGINX_CONF="/usr/trim/nginx/conf/conf.d/fan_console.conf"
 if [ -f "$NGINX_CONF" ]; then
     rm -f "$NGINX_CONF"
     /usr/trim/nginx/sbin/nginx -s reload 2>/dev/null || true

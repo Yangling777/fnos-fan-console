@@ -199,7 +199,7 @@ class FanController(threading.Thread):
         if not url:
             return
         payload = {
-            "app": "fan-control",
+            "app": "fan-console",
             "event": event,   # full_speed / degraded / recovered
             "zone": {"id": zone.get("id"), "name": zone.get("name")},
             "message": message,

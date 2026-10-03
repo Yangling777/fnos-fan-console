@@ -53,7 +53,7 @@ def main():
 
     # ── 环境变量 ──
     app_dest = os.environ.get("TRIM_APPDEST", os.path.dirname(__file__))
-    config_dir = os.environ.get("TRIM_PKGETC", "/tmp/fan-control-etc")
+    config_dir = os.environ.get("TRIM_PKGETC", "/tmp/fan-console-etc")
     port = int(os.environ.get("TRIM_SERVICE_PORT") or "9511")
     # 默认 0.0.0.0 允许局域网访问；如需限制仅本机访问可设 FAN_CONTROL_BIND=127.0.0.1
     bind_address = os.environ.get("FAN_CONTROL_BIND", "0.0.0.0")

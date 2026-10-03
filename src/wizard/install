@@ -16,7 +16,7 @@
             },
             {
                 "type": "tips",
-                "helpText": "📌 重装失败时执行：bash /tmp/cleanup-fan-control.sh"
+                "helpText": "📌 重装失败时执行：bash /tmp/cleanup-fan-console.sh"
             }
         ]
     },

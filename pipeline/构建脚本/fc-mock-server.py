@@ -164,6 +164,11 @@ class H(BaseHTTPRequestHandler):
                 html = html.replace("</body>", "<script>setTimeout(function(){var b=document.getElementById('wpBtn');if(b)b.click();},250);</script></body>")
             if "zoneedit" in qs:
                 html = html.replace("</body>", "<script>setTimeout(function(){var b=document.getElementById('zoneAddBtn');if(b)b.click();},700);</script></body>")
+            if "login" in qs:
+                html = html.replace("</body>", "<script>setTimeout(function(){var o=document.getElementById('loginOverlay');if(o){o.style.display='flex';}},500);</script></body>")
+            wallpaper = (qs.get("wallpaper") or [""])[0]
+            if wallpaper in ("blue", "dusk", "mint", "obsidian"):
+                html = html.replace("</body>", "<script>setTimeout(function(){var b=document.querySelector('.wp-item[data-wp=\"" + wallpaper + "\"]');if(b)b.click();},700);</script></body>")
             if "dirty" in qs:
                 html = html.replace("</body>", "<script>setTimeout(function(){try{document.getElementById('curveEditBtn').click();var ins=document.querySelectorAll('#curveInputs input');if(ins.length>=3){ins[2].value=42;ins[2].dispatchEvent(new Event('input',{bubbles:true}));}else if(ins.length){ins[0].dispatchEvent(new Event('input',{bubbles:true}));}}catch(e){}},600);</script></body>")
             if "probe" in qs:

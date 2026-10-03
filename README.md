@@ -1,4 +1,4 @@
-# 飞牛风扇控制器 · fnos-fan-control(可能是你能找到的最好看的飞牛风扇控制器)
+# 飞牛风扇控制器 · fnos-fan-console(可能是你能找到的最好看的飞牛风扇控制器)
 
 > **飞牛风扇控制器** —— **颜值与功能都在线**:液态玻璃(Liquid Glass)+ 拯救者(Legion)风格的飞牛 NAS 风扇控制台。
 > 基于 [AriesOxO/fnos-fan-control](https://github.com/AriesOxO/fnos-fan-control)(MIT License)二次开发。
@@ -40,17 +40,17 @@
 
 ## 📥 安装
 
-1. 在 [Releases](../../releases) 页面下载 `fan-control_1.0.0.fpk`(产品版本 **v1.0**,fpk 版本号与产品一致);
+1. 在 [Releases](../../releases) 页面下载 `fan-console_1.0.0.fpk`(产品版本 **v1.0**,fpk 版本号与产品一致);
 2. 飞牛 fnOS 应用中心 → 手动安装 → 上传该 fpk;或 SSH 执行:
 
    ```bash
-   appcenter-cli install-fpk fan-control_1.0.0.fpk
+   appcenter-cli install-fpk fan-console_1.0.0.fpk
    ```
 
 3. 安装向导中设置管理端口(默认 9511)与访问密码(留空 = 不启用认证)。
 
-> 说明:本包已在飞牛 fnOS 真机完成安装验证;实测 `appcenter-cli install-fpk` 在应用已安装时不会执行升级,后续版本升级请在应用中心界面操作,或卸载后重装(卸载前请备份 `/vol1/@appconf/fan-control/`)。
-> 国内镜像(Gitee):[linxiang011/fnos-fan-control](https://gitee.com/linxiang011/fnos-fan-control)(源码 + 发行版附件,国内访问更快)。
+> 说明:本包内部应用标识为 **fan-console**(v1.0 起由 fan-control 更名,避免与上游重名;从旧版迁移步骤见发行说明);已在飞牛 fnOS 真机完成安装验证;实测 `appcenter-cli install-fpk` 在应用已安装时不会执行升级,后续版本升级请在应用中心界面操作,或卸载后重装(卸载前请备份 `/vol1/@appconf/fan-console/`)。
+> 国内镜像(Gitee):[linxiang011/fnos-fan-console](https://gitee.com/linxiang011/fnos-fan-console)(源码 + 发行版附件,国内访问更快)。
 
 ## 🔧 从源码构建
 
@@ -108,7 +108,7 @@ screenshots/         # 界面截图(Mock 数据)
 ## 🔗 相关链接
 
 - 📝 博客介绍:[《给飞牛 NAS 写了个风扇控制器 v1.0:液态玻璃界面 + 多区域管理 + 一键安装包》](https://linxiang.cloud/archives/fnos-fan-controller-v1)
-- 🇨🇳 国内镜像(Gitee):[gitee.com/linxiang011/fnos-fan-control](https://gitee.com/linxiang011/fnos-fan-control)(源码 + 发行版 fpk,访问更快)
+- 🇨🇳 国内镜像(Gitee):[gitee.com/linxiang011/fnos-fan-console](https://gitee.com/linxiang011/fnos-fan-console)(源码 + 发行版 fpk,访问更快)
 - 🧩 上游项目:[AriesOxO/fnos-fan-control](https://github.com/AriesOxO/fnos-fan-control)(MIT License)
 
 ## 🙏 致谢与许可

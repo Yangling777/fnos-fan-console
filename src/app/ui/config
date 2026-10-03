@@ -1,6 +1,6 @@
 {
     ".url": {
-        "fan-control.Application": {
+        "fan-console.Application": {
             "title": "风扇控制器",
             "desc": "风扇控制器",
             "icon": "images/icon_{0}.png",

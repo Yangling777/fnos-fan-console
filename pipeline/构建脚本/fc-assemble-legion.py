@@ -528,6 +528,17 @@ old_mz = "document.getElementById('singleModeSection').style.display='none';docu
 assert html.count(old_mz) == 1, "multiZone 隐藏曲线行未找到"
 html = html.replace(old_mz, "document.getElementById('singleModeSection').style.display='none'")
 
+# ══════ 5.9) 项目改名 fan-console:使用说明中的清理命令 ══════
+for old, new in [
+    ("bash /tmp/cleanup-fan-control.sh", "bash /tmp/cleanup-fan-console.sh"),
+    ("userdel fan-control 2>/dev/null", "userdel fan-console 2>/dev/null"),
+    ("groupdel fan-control 2>/dev/null", "groupdel fan-console 2>/dev/null"),
+    ('rm -rf "$vol/$dir/fan-control"', 'rm -rf "$vol/$dir/fan-console"'),
+    ("rm -rf /var/apps/fan-control", "rm -rf /var/apps/fan-console"),
+]:
+    assert html.count(old) == 1, f"改名替换未找到: {old}"
+    html = html.replace(old, new)
+
 # 设置/日志/说明三个折叠块默认展开(独立页面直接可见)
 for old, new in [
     ('<div class="section-title collapsible" data-target="settingsBody"', '<div class="section-title collapsible open" data-target="settingsBody"'),
@@ -1270,7 +1281,7 @@ SCRIPTS = """
     var d = new Date();
     function p(v) { return (v < 10 ? "0" : "") + v; }
     a.href = URL.createObjectURL(blob);
-    a.download = "fan-control-logs-" + d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate()) +
+    a.download = "fan-console-logs-" + d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate()) +
                  "-" + p(d.getHours()) + p(d.getMinutes()) + ".log";
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
@@ -1379,7 +1390,7 @@ SCRIPTS = """
       var blob = new Blob([JSON.stringify(cfg, null, 2)], { type: "application/json" });
       var a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = "fan-control-config-" + stamp() + ".json";
+      a.download = "fan-console-config-" + stamp() + ".json";
       document.body.appendChild(a); a.click(); a.remove();
       setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
       showToast("配置已导出");
@@ -1788,6 +1799,7 @@ checks = ["top-grid", "bottom-grid", "sidebar", "FAN CONSOLE", "pentagon", "gaug
           "log-actions", "spark-wrap", "cfg-actions", "__fcBuildLogText", "setLogPolling", "sparkLegend",
           "viewZones", "zoneAddBtn", "zfCurve", "notifyToggle", "webhookInput", "webhookSaveBtn",
           'rel="manifest"', "apple-touch-icon", "区域管理",
-          "区域管理(多风扇)", "温度趋势与日志", "通知与告警", "备份与恢复", "手机端与添加到主屏"]
+          "区域管理(多风扇)", "温度趋势与日志", "通知与告警", "备份与恢复", "手机端与添加到主屏",
+          "fan-console-logs-", "fan-console-config-", "cleanup-fan-console.sh", "rm -rf /var/apps/fan-console"]
 for m in checks:
     print("  -", m, "->", "OK" if m in html else "MISSING")

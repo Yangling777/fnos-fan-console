@@ -1329,12 +1329,12 @@ body{overflow:hidden}
             <li>卸载后风扇自动恢复为系统原始温控，不影响硬件。</li>
             <li>如果重装时提示"检查用户组失败"，请以 root 身份执行清理脚本：</li>
           </ul>
-          <div class="guide-code">bash /tmp/cleanup-fan-control.sh</div>
+          <div class="guide-code">bash /tmp/cleanup-fan-console.sh</div>
           <ul style="margin-top:8px">
             <li>清理脚本随应用安装自动释放到 /tmp 目录，卸载后仍可用。</li>
             <li>如果服务器重启过导致脚本丢失，可手动执行以下命令：</li>
           </ul>
-          <div class="guide-code">userdel fan-control 2>/dev/null<br>groupdel fan-control 2>/dev/null<br>for vol in $(ls -d /vol* 2>/dev/null); do<br>&nbsp;&nbsp;for dir in @appconf @appdata @apphome @appmeta @apptemp @appcenter; do<br>&nbsp;&nbsp;&nbsp;&nbsp;rm -rf "$vol/$dir/fan-control"<br>&nbsp;&nbsp;done<br>done<br>rm -rf /var/apps/fan-control</div>
+          <div class="guide-code">userdel fan-console 2>/dev/null<br>groupdel fan-console 2>/dev/null<br>for vol in $(ls -d /vol* 2>/dev/null); do<br>&nbsp;&nbsp;for dir in @appconf @appdata @apphome @appmeta @apptemp @appcenter; do<br>&nbsp;&nbsp;&nbsp;&nbsp;rm -rf "$vol/$dir/fan-console"<br>&nbsp;&nbsp;done<br>done<br>rm -rf /var/apps/fan-console</div>
         </div>
       </div>
     </div>
@@ -2405,7 +2405,7 @@ init();
     var d = new Date();
     function p(v) { return (v < 10 ? "0" : "") + v; }
     a.href = URL.createObjectURL(blob);
-    a.download = "fan-control-logs-" + d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate()) +
+    a.download = "fan-console-logs-" + d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate()) +
                  "-" + p(d.getHours()) + p(d.getMinutes()) + ".log";
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
@@ -2514,7 +2514,7 @@ init();
       var blob = new Blob([JSON.stringify(cfg, null, 2)], { type: "application/json" });
       var a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = "fan-control-config-" + stamp() + ".json";
+      a.download = "fan-console-config-" + stamp() + ".json";
       document.body.appendChild(a); a.click(); a.remove();
       setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
       showToast("配置已导出");
